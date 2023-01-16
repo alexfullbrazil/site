@@ -1,0 +1,21 @@
+query GetPosts($skip: Int, $orderBy: PostOrderByInput) {
+  posts(skip: $skip, orderBy: $orderBy) {
+    id
+    title
+    excerpt
+    createdAt
+    slug
+    author {
+      name
+    }
+    content {
+      html
+    }
+    coverImage {
+      url
+      width
+      height
+    }
+    tags
+  }
+}
