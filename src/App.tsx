@@ -1,31 +1,23 @@
-// import '/src/styles/app.scss';
-import { useGetPostsQuery } from './generated/graphql';
+import { Suspense, lazy } from 'react';
+import { Route, Routes } from 'react-router-dom';
+import Header from './components/header';
+const Home = lazy(() => import('./pages/home'));
+const Blog = lazy(() => import('./pages/blog'));
+const Post = lazy(() => import('./pages/blog/post'));
+const NotFound = lazy(() => import('./pages/not-found'));
 
-function App() {
-  const {
-    data: dataPosts,
-    loading,
-    error,
-  } = useGetPostsQuery({
-    variables: {},
-  });
-
+export default function App() {
   return (
     <>
-      <ul>
-        {dataPosts?.posts?.map((item) => {
-          return (
-            <li key={item.id}>
-              <h2>{item.title}</h2>
-              <p>{item.excerpt}</p>
-              <img src={item.coverImage?.url} alt={item.title} />
-              <div dangerouslySetInnerHTML={{ __html: item.content.html }} />
-            </li>
-          );
-        })}
-      </ul>
+      <Header />
+      <Suspense fallback={<h1 className='container'>Loading...</h1>}>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='blog' element={<Blog />} />
+          <Route path='blog/post/:slug' element={<Post />} />
+          <Route path='*' element={<NotFound />} />
+        </Routes>
+      </Suspense>
     </>
   );
 }
-
-export default App;

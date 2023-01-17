@@ -19,3 +19,25 @@ query GetPosts($skip: Int, $orderBy: PostOrderByInput) {
     tags
   }
 }
+
+query GetPost($where: PostWhereUniqueInput!) {
+  post(where: $where) {
+    id
+    title
+    excerpt
+    createdAt
+    slug
+    author {
+      name
+    }
+    content {
+      html
+    }
+    coverImage {
+      url
+      width
+      height
+    }
+    tags
+  }
+}

@@ -3630,8 +3630,7 @@ export type Post = Node & {
   scheduledIn: Array<ScheduledOperation>;
   /** Attach an SEO model to this post */
   seo?: Maybe<Seo>;
-  /** Select a slug for this blog post, such as post-1, post-2, etc. */
-  slug: Scalars['String'];
+  slug?: Maybe<Scalars['String']>;
   /** System stage field */
   stage: Stage;
   /** Add any relevant tags to this blog post */
@@ -3731,7 +3730,7 @@ export type PostCreateInput = {
   date: Scalars['Date'];
   excerpt?: InputMaybe<Scalars['String']>;
   seo?: InputMaybe<SeoCreateOneInlineInput>;
-  slug: Scalars['String'];
+  slug?: InputMaybe<Scalars['String']>;
   tags?: InputMaybe<Array<Scalars['String']>>;
   title: Scalars['String'];
   updatedAt?: InputMaybe<Scalars['DateTime']>;
@@ -5692,6 +5691,7 @@ export type Seo = Node & {
   /** User that last published this document */
   publishedBy?: Maybe<User>;
   scheduledIn: Array<ScheduledOperation>;
+  slug?: Maybe<Scalars['String']>;
   /** System stage field */
   stage: Stage;
   /** Create a custom meta title */
@@ -5781,6 +5781,7 @@ export type SeoCreateInput = {
   image?: InputMaybe<AssetCreateOneInlineInput>;
   keywords?: InputMaybe<Array<Scalars['String']>>;
   parent?: InputMaybe<SeoParentCreateOneInlineInput>;
+  slug?: InputMaybe<Scalars['String']>;
   title?: InputMaybe<Scalars['String']>;
   updatedAt?: InputMaybe<Scalars['DateTime']>;
 };
@@ -5905,6 +5906,25 @@ export type SeoManyWhereInput = {
   scheduledIn_every?: InputMaybe<ScheduledOperationWhereInput>;
   scheduledIn_none?: InputMaybe<ScheduledOperationWhereInput>;
   scheduledIn_some?: InputMaybe<ScheduledOperationWhereInput>;
+  slug?: InputMaybe<Scalars['String']>;
+  /** All values containing the given string. */
+  slug_contains?: InputMaybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  slug_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  slug_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** All values that are not equal to given value. */
+  slug_not?: InputMaybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  slug_not_contains?: InputMaybe<Scalars['String']>;
+  /** All values not ending with the given string */
+  slug_not_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are not contained in given list. */
+  slug_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** All values not starting with the given string. */
+  slug_not_starts_with?: InputMaybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  slug_starts_with?: InputMaybe<Scalars['String']>;
   title?: InputMaybe<Scalars['String']>;
   /** All values containing the given string. */
   title_contains?: InputMaybe<Scalars['String']>;
@@ -5953,6 +5973,8 @@ export enum SeoOrderByInput {
   KeywordsDesc = 'keywords_DESC',
   PublishedAtAsc = 'publishedAt_ASC',
   PublishedAtDesc = 'publishedAt_DESC',
+  SlugAsc = 'slug_ASC',
+  SlugDesc = 'slug_DESC',
   TitleAsc = 'title_ASC',
   TitleDesc = 'title_DESC',
   UpdatedAtAsc = 'updatedAt_ASC',
@@ -6052,6 +6074,7 @@ export type SeoUpdateInput = {
   image?: InputMaybe<AssetUpdateOneInlineInput>;
   keywords?: InputMaybe<Array<Scalars['String']>>;
   parent?: InputMaybe<SeoParentUpdateOneInlineInput>;
+  slug?: InputMaybe<Scalars['String']>;
   title?: InputMaybe<Scalars['String']>;
 };
 
@@ -6224,6 +6247,25 @@ export type SeoWhereInput = {
   scheduledIn_every?: InputMaybe<ScheduledOperationWhereInput>;
   scheduledIn_none?: InputMaybe<ScheduledOperationWhereInput>;
   scheduledIn_some?: InputMaybe<ScheduledOperationWhereInput>;
+  slug?: InputMaybe<Scalars['String']>;
+  /** All values containing the given string. */
+  slug_contains?: InputMaybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  slug_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  slug_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** All values that are not equal to given value. */
+  slug_not?: InputMaybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  slug_not_contains?: InputMaybe<Scalars['String']>;
+  /** All values not ending with the given string */
+  slug_not_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are not contained in given list. */
+  slug_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** All values not starting with the given string. */
+  slug_not_starts_with?: InputMaybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  slug_starts_with?: InputMaybe<Scalars['String']>;
   title?: InputMaybe<Scalars['String']>;
   /** All values containing the given string. */
   title_contains?: InputMaybe<Scalars['String']>;
@@ -6278,6 +6320,7 @@ export type SeoWhereStageInput = {
 /** References Seo record uniquely */
 export type SeoWhereUniqueInput = {
   id?: InputMaybe<Scalars['ID']>;
+  slug?: InputMaybe<Scalars['String']>;
 };
 
 /** Stage system enumeration */
@@ -6787,19 +6830,28 @@ export enum _SystemDateTimeFieldVariation {
 
 export type GetPostsQueryVariables = Exact<{
   skip?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<PostOrderByInput>;
 }>;
 
 
-export type GetPostsQuery = { __typename?: 'Query', posts: Array<{ __typename?: 'Post', id: string, title: string, excerpt?: string | null, createdAt: any, tags: Array<string>, author?: { __typename?: 'Author', name: string } | null, content: { __typename?: 'RichText', html: string }, coverImage?: { __typename?: 'Asset', url: string, width?: number | null, height?: number | null } | null }> };
+export type GetPostsQuery = { __typename?: 'Query', posts: Array<{ __typename?: 'Post', id: string, title: string, excerpt?: string | null, createdAt: any, slug?: string | null, tags: Array<string>, author?: { __typename?: 'Author', name: string } | null, content: { __typename?: 'RichText', html: string }, coverImage?: { __typename?: 'Asset', url: string, width?: number | null, height?: number | null } | null }> };
+
+export type GetPostQueryVariables = Exact<{
+  where: PostWhereUniqueInput;
+}>;
+
+
+export type GetPostQuery = { __typename?: 'Query', post?: { __typename?: 'Post', id: string, title: string, excerpt?: string | null, createdAt: any, slug?: string | null, tags: Array<string>, author?: { __typename?: 'Author', name: string } | null, content: { __typename?: 'RichText', html: string }, coverImage?: { __typename?: 'Asset', url: string, width?: number | null, height?: number | null } | null } | null };
 
 
 export const GetPostsDocument = gql`
-    query GetPosts($skip: Int) {
-  posts(skip: $skip) {
+    query GetPosts($skip: Int, $orderBy: PostOrderByInput) {
+  posts(skip: $skip, orderBy: $orderBy) {
     id
     title
     excerpt
     createdAt
+    slug
     author {
       name
     }
@@ -6829,6 +6881,7 @@ export const GetPostsDocument = gql`
  * const { data, loading, error } = useGetPostsQuery({
  *   variables: {
  *      skip: // value for 'skip'
+ *      orderBy: // value for 'orderBy'
  *   },
  * });
  */
@@ -6843,3 +6896,54 @@ export function useGetPostsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<G
 export type GetPostsQueryHookResult = ReturnType<typeof useGetPostsQuery>;
 export type GetPostsLazyQueryHookResult = ReturnType<typeof useGetPostsLazyQuery>;
 export type GetPostsQueryResult = Apollo.QueryResult<GetPostsQuery, GetPostsQueryVariables>;
+export const GetPostDocument = gql`
+    query GetPost($where: PostWhereUniqueInput!) {
+  post(where: $where) {
+    id
+    title
+    excerpt
+    createdAt
+    slug
+    author {
+      name
+    }
+    content {
+      html
+    }
+    coverImage {
+      url
+      width
+      height
+    }
+    tags
+  }
+}
+    `;
+
+/**
+ * __useGetPostQuery__
+ *
+ * To run a query within a React component, call `useGetPostQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPostQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetPostQuery({
+ *   variables: {
+ *      where: // value for 'where'
+ *   },
+ * });
+ */
+export function useGetPostQuery(baseOptions: Apollo.QueryHookOptions<GetPostQuery, GetPostQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetPostQuery, GetPostQueryVariables>(GetPostDocument, options);
+      }
+export function useGetPostLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPostQuery, GetPostQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetPostQuery, GetPostQueryVariables>(GetPostDocument, options);
+        }
+export type GetPostQueryHookResult = ReturnType<typeof useGetPostQuery>;
+export type GetPostLazyQueryHookResult = ReturnType<typeof useGetPostLazyQuery>;
+export type GetPostQueryResult = Apollo.QueryResult<GetPostQuery, GetPostQueryVariables>;
