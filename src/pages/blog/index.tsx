@@ -1,6 +1,5 @@
-import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useGetPostsQuery } from '../../generated/graphql';
-import { Link, useLocation } from 'react-router-dom';
 
 export default function Blog() {
   const {
@@ -18,9 +17,8 @@ export default function Blog() {
           return (
             <li key={item.id}>
               <h2>{item.title}</h2>
+              <img src={item.coverImage?.url} alt={item.title} />
               <p>{item.excerpt}</p>
-              {/* <img src={item.coverImage?.url} alt={item.title} />
-              <div dangerouslySetInnerHTML={{ __html: item.content.html }} /> */}
               <Link to={`post/${item.slug}`}>More {'->'}</Link>
             </li>
           );
