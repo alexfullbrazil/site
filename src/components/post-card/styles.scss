@@ -1,0 +1,17 @@
+@import '../../styles/modules/rem-calc';
+
+.post-card-wrapper {
+  column-count: 3;
+  column-span: all;
+}
+
+.post-card-item {
+  break-inside: avoid-column;
+  display: inline-table;
+  height: 500px;
+}
+
+.post-card-coverImage {
+  width: 100%;
+  
+}

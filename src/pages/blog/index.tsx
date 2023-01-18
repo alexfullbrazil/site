@@ -1,5 +1,7 @@
-import { Link } from 'react-router-dom';
 import { useGetPostsQuery } from '../../generated/graphql';
+import PostCard from '../../components/post-card';
+
+import '../../components/post-card/styles.scss';
 
 export default function Blog() {
   const {
@@ -12,7 +14,7 @@ export default function Blog() {
 
   return (
     <>
-      <ul>
+      {/* <ul>
         {dataPosts?.posts?.map((item) => {
           return (
             <li key={item.id}>
@@ -23,7 +25,20 @@ export default function Blog() {
             </li>
           );
         })}
-      </ul>
+      </ul> */}
+      <div className='post-card-wrapper'>
+        {dataPosts?.posts?.map((post) => {
+          return (
+            <PostCard
+              key={post.id}
+              title={post.title}
+              slug={post.slug || undefined}
+              excerpt={post.excerpt || undefined}
+              coverImage={post.coverImage?.url}
+            />
+          );
+        })}
+      </div>
     </>
   );
 }
