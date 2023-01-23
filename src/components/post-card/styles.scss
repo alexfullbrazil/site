@@ -10,14 +10,24 @@
   display: inline-table;
   height: 500px;
 
-    h2 {
-      font-size: em-calc(24);
-      color: $purple;
-      padding: $globalGap;
-    }
+
+}
+
+.post-card-title {
+  font-size: em-calc(24);
+  margin-bottom: rem-calc(24);
+
+}
+
+.post-card-excerpt {
+  margin-bottom: rem-calc(24);
+}
+
+.post-card-content {
+  padding: $globalGap;
 }
 
 .post-card-coverImage {
   width: 100%;
-  
+
 }

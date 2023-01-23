@@ -1,4 +1,6 @@
 import { Link } from 'react-router-dom';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 import './styles.scss';
 
@@ -33,12 +35,19 @@ export default function PostCard({
 }: PostCardProps) {
   return (
     <div className='post-card-item'>
-      <img className='post-card-coverImage' src={coverImage} alt={title} />
-      <h2 className='post-card-title'>{title}</h2>
-      <p className='post-card-excerpt'>{excerpt}</p>
-      <Link className='post-card-link' to={`post/${slug}`}>
-        More {'->'}
-      </Link>
+      <LazyLoadImage
+        className='post-card-coverImage'
+        src={coverImage}
+        alt={title}
+        effect='blur'
+      />
+      <div className='post-card-content'>
+        <h2 className='post-card-title'>{title}</h2>
+        <p className='post-card-excerpt'>{excerpt}</p>
+        <Link className='post-card-link' to={`post/${slug}`}>
+          More {'->'}
+        </Link>
+      </div>
     </div>
   );
 }
