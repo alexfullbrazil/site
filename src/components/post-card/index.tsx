@@ -33,8 +33,8 @@ export default function PostCard({
 }: PostCardProps) {
   return (
     <div className='post-card-item'>
-      <h2 className='post-card-title'>{title}</h2>
       <img className='post-card-coverImage' src={coverImage} alt={title} />
+      <h2 className='post-card-title'>{title}</h2>
       <p className='post-card-excerpt'>{excerpt}</p>
       <Link className='post-card-link' to={`post/${slug}`}>
         More {'->'}

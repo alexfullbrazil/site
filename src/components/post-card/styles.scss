@@ -1,4 +1,4 @@
-@import '../../styles/modules/rem-calc';
+@import '../../styles/modules/root';
 
 .post-card-wrapper {
   column-count: 3;
@@ -9,6 +9,12 @@
   break-inside: avoid-column;
   display: inline-table;
   height: 500px;
+
+    h2 {
+      font-size: em-calc(24);
+      color: $purple;
+      padding: $globalGap;
+    }
 }
 
 .post-card-coverImage {
