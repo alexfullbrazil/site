@@ -1,0 +1,8 @@
+{
+  "recommendations": [
+    "ms-vscode.vscode-typescript-next",
+    "graphql.vscode-graphql-syntax",
+    "graphql.vscode-graphql",
+    "graphql.vscode-graphql-execution"
+  ]
+}

@@ -1,8 +1,8 @@
-import { useGetPostsQuery } from '../../generated/graphql';
-import PostCard from '../../components/post-card';
+import { useGetPostsQuery } from 'gql/types';
+import PostCard from 'components/post-card';
 
-import '../../components/post-card/styles.scss';
-import '../../components/post-card/styles.scss';
+import 'components/post-card/styles.scss';
+import 'components/post-card/styles.scss';
 
 export default function Blog() {
   const {

@@ -1,10 +1,10 @@
 import { Suspense, lazy } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-const Home = lazy(() => import('../pages/home'));
-const Blog = lazy(() => import('../pages/blog'));
-const Post = lazy(() => import('../pages/blog/post'));
-const NotFound = lazy(() => import('../pages/not-found'));
+const Home = lazy(() => import('pages/home'));
+const Blog = lazy(() => import('pages/blog'));
+const Post = lazy(() => import('pages/blog/post'));
+const NotFound = lazy(() => import('pages/not-found'));
 
 export default function Router() {
   return (

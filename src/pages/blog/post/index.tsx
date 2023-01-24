@@ -1,6 +1,6 @@
-import { useGetPostQuery } from '../../../generated/graphql';
+import { useGetPostQuery } from 'gql/types';
 import { useParams } from 'react-router-dom';
-import NotFound from '../../not-found';
+import NotFound from 'pages/not-found';
 
 export default function Post() {
   const { slug } = useParams();
